@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.devsuperior.dsmeta.dto.SaleReportDTO;
+import com.devsuperior.dsmeta.dto.SaleSummaryDTO;
+import com.devsuperior.dsmeta.projections.SaleSummaryMinProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +36,7 @@ public class SaleService {
 		LocalDate start = (startDate == null || startDate.isEmpty())  ? end.minusYears(1L) :  LocalDate.parse(startDate);
 
 		return repository.findSummaryBySalesperson(name,start,end,pageable);
-
-
 	}
+
+	
 }
