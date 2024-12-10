@@ -1,6 +1,8 @@
 package com.devsuperior.dsmeta.services;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,8 +30,9 @@ public class SaleService {
 	}
 	public Page<SaleReportDTO> SummaryBySalesperson(String name, String startDate, String endDate, Pageable pageable) {
 
-		LocalDate start = LocalDate.parse(startDate);
-		LocalDate end = LocalDate.parse(endDate);
+		LocalDate end = (endDate == null || endDate.isEmpty())  ? LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault()) : LocalDate.parse(endDate);
+		LocalDate start = (startDate == null || startDate.isEmpty())  ? end.minusYears(1L) :  LocalDate.parse(startDate);
+
 		return repository.findSummaryBySalesperson(name,start,end,pageable);
 
 
