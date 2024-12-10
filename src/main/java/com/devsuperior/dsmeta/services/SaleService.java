@@ -24,19 +24,30 @@ public class SaleService {
 
 	@Autowired
 	private SaleRepository repository;
-	
+
 	public SaleMinDTO findById(Long id) {
 		Optional<Sale> result = repository.findById(id);
 		Sale entity = result.get();
 		return new SaleMinDTO(entity);
 	}
+
 	public Page<SaleReportDTO> SummaryBySalesperson(String name, String startDate, String endDate, Pageable pageable) {
 
-		LocalDate end = (endDate == null || endDate.isEmpty())  ? LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault()) : LocalDate.parse(endDate);
-		LocalDate start = (startDate == null || startDate.isEmpty())  ? end.minusYears(1L) :  LocalDate.parse(startDate);
+		LocalDate end = (endDate == null || endDate.isEmpty()) ? LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault()) : LocalDate.parse(endDate);
+		LocalDate start = (startDate == null || startDate.isEmpty()) ? end.minusYears(1L) : LocalDate.parse(startDate);
 
-		return repository.findSummaryBySalesperson(name,start,end,pageable);
+		return repository.findSummaryBySalesperson(name, start, end, pageable);
 	}
 
-	
+	public List<SaleSummaryDTO> SalesSummaryBySalesperson(String minDate, String maxDate) {
+		LocalDate end = (maxDate == null || maxDate.isEmpty()) ?
+				LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault()) :
+				LocalDate.parse(maxDate);
+
+		LocalDate start = (minDate == null || minDate.isEmpty())
+				? end.minusYears(1L) : LocalDate.parse(minDate);
+
+		List<SaleSummaryMinProjection> projection = repository.findSalesSummaryBySalesperson(start, end);
+		return projection.stream().map(x -> new SaleSummaryDTO(x)).collect(Collectors.toList());
+	}
 }
