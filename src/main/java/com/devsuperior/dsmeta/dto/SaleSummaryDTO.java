@@ -16,8 +16,8 @@ public class SaleSummaryDTO {
         this.total = total;
     }
     public SaleSummaryDTO(SaleSummaryMinProjection entity) {
-        SellerName = entity.SellerName();
-        total = entity.total();
+        SellerName = entity.getSellerName();
+        total = entity.getTotal();
     }
 
     public String getSellerName() {

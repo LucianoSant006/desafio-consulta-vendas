@@ -25,13 +25,13 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
                                                  @Param("endDate")  LocalDate endDate,
                                                  Pageable pageable);
 
-    @Query(nativeQuery = true, value = "SELECT tb_seller.name AS SellerName,tb_sales.amount AS Total"
-            +" FROM tb_sales INNER JOIN tb_seller "
-            +"ON tb_sales.seller_id = tb_seller.id "
-            +" WHERE tb_sales.amount = ( " +
-            "SELECT MAX(tb_sales.amount) "
-            + "FROM tb_sales  "
-            +"WHERE tb_sales.seller_id = tb_seller.id "
-            +"AND tb_sales.date BETWEEN :minDate AND :maxDate )")
+    @Query(nativeQuery = true, value =
+            "SELECT tb_seller.name AS sellerName, SUM(tb_sales.amount) AS total "
+                    + "FROM tb_seller " + "INNER JOIN  tb_sales ON " +
+                    "    tb_seller.id = tb_sales.seller_id " +
+                    "WHERE  tb_sales.date BETWEEN :minDate AND :maxDate " +
+                    "GROUP BY  tb_seller.name" +
+                    " ORDER BY tb_seller.name ASC"
+    )
     List<SaleSummaryMinProjection>findSalesSummaryBySalesperson(@Param("minDate")LocalDate minDate,@Param("maxDate") LocalDate maxDate);
 }
