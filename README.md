@@ -3,9 +3,11 @@
 ## Você deverá forkar o projeto abaixo e implementar as consultas como se pede a seguir.
 
 ## Descrição do projeto
-### Trata-se de um sistema de vendas (Sale) e vendedores(Seller) utilizando Java e Framework SpringBoot com Consultas Nativas com JPQL E SQL
+### Trata-se de um sistema de vendas (Sale) e vendedores (Seller) utilizando Java e Framework SpringBoot com Consultas Nativas com JPQL E SQL
+
+![Descrição do Desafio](https://raw.githubusercontent.com/LucianoSant006/desafio-consulta-vendas/main/desafio%20consultavendas.svg)
+
 # Requisitos
-## Você deverá implementar as seguintes consultas (ambas deverão estar corretas):
 ### Relatório de vendas
 #### 1. [IN] O usuário informa, opcionalmente, data inicial, data final e um trecho do nome do vendedor.2. [OUT] O sistema informa uma listagem paginada contendo id, data, quantia vendida e nome do vendedor, das vendas que se enquadrem nos dados informados.Informações complementares:
 ####  Se a data final não for informada, considerar a data atual do sistema. Para instanciar a data atual, utilize o comando: LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
